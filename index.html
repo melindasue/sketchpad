@@ -1,0 +1,82 @@
+<!doctype>
+<html>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<style>
+			.grid-container {
+				max-width:900px;
+				min-width: 900px;
+				margin:0px auto;
+				margin-top: 20px;
+			}
+
+			.square {
+				height:100px;
+				width:100px;
+				background-color: black;
+				display:inline-block;
+				margin-right: 5px;
+				margin-bottom: 5px;
+			}
+		</style>
+	</head>
+	
+	<body>
+			<button class="clear-all">Clear all</button>
+			<button class="new-grid">Create new grid</button>
+			<div class="grid-container"></div>
+	</body>
+
+	<script>
+
+	function initGrid() {
+		for (i=0; i<=63; i++) {
+			var square = $("<div>").attr("class", "square");
+			$('.grid-container').append(square);
+		}
+		hoverEffect();
+ 	}
+
+	function createNewGrid() {
+		$('.new-grid').click(function () {
+			
+			//get new number
+			var sign = window.prompt('What kind of grid do you want?'); 
+			var num = parseInt(sign);
+			var total = num * num;
+			$( ".square" ).remove();
+			
+			//draw the new grid
+			for (i=0; i<=(total-1);i++) {
+				var square = $("<div>").attr("class", "square");
+				$('.grid-container').append(square);
+			}
+			
+			//set new square size
+			var curSize = parseInt($('.grid-container').css("max-width")); 
+			var spaceForMargins = 5*num;
+			var remainingSpace = (curSize - spaceForMargins);
+			var newSquare = remainingSpace / num;
+			
+			$('.square').css("width" , newSquare, "height" , newSquare);
+			hoverEffect();
+		});
+	}
+
+	function hoverEffect() { 
+		$('.square').mouseenter(function() {
+  			$(this).css("background-color" , "grey");
+		});
+	}
+
+	$('.clear-all').click(function () {
+		$('.square').css("background-color" , "black");
+	});
+
+	initGrid();
+	createNewGrid();
+
+
+	</script>
+</html>
+
